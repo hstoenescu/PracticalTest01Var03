@@ -22,49 +22,55 @@ public class PracticalTest01Var03MainActivity extends AppCompatActivity {
     private EditText text2 = null;
     private EditText text3 = null;
 
-    private Toast toast = null;
 
     private ButtonClickListener buttonClickListener = new ButtonClickListener();
     private class ButtonClickListener implements View.OnClickListener {
 
         @Override
         public void onClick(View view) {
-            // initializam string-urile cu "" si verificam dac checkBox-ul este enabled
+            /* initializare string-uri cu null si verificam daca checkbox-urile sunt tick-uite */
             String str1 = "", str2 = "";
 
-            if (checkBox1.isEnabled()) {
+            if (checkBox1.isChecked())
                 str1 = text1.getText().toString();
-                if (str1.isEmpty()) {
-                    //Toast.makeText("");
-                    str1 = "";
-                }
-            }
 
-
-            if (checkBox2.isEnabled()) {
+            if (checkBox2.isChecked())
                 str2 = text2.getText().toString();
-                if (str2.isEmpty()) {
-                    // toast
-                    str2="";
-                }
-            }
+
             switch(view.getId()) {
                 // in cazul in care apasam pe butam, punem pe text3 cele 2 msj concatenate
                 case R.id.display_information:
                     // in cazul in care e vid punem doar un string null
+                    String textForToast = "";
+                    if (!checkBox1.isChecked()) {
+                        if (!textForToast.isEmpty())
+                            textForToast += "\n";
+                        textForToast += "Checkbox1 not enabled (text1 not null)";
+                    }
+                    if (!checkBox2.isChecked()) {
+                        if (!textForToast.isEmpty())
+                            textForToast += "\n";
+                        textForToast += "Checkbox2 not enabled (text2 not null)";
+                    }
+
+                    if (! textForToast.isEmpty())
+                        showToast(textForToast);
+
                     text3.setText(String.valueOf(str1 + " " + str2));
                     break;
                 case R.id.navsec:
                     Intent intent = new Intent (getApplicationContext(),PracticalTest01Var03SecondaryActivity.class);
-                    String txt1 = text1.getText().toString();
-                    String txt2 = text2.getText().toString();
-                    intent.putExtra("text1", txt1);
-                    intent.putExtra("text2", txt2);
+                    intent.putExtra("text1", str1);
+                    intent.putExtra("text2", str2);
                     startActivityForResult(intent, SECONDARY_ACTIVITY_REQUEST_CODE);
                     break;
             }
         }
 
+    }
+
+    protected void showToast (String str) {
+        Toast.makeText(this, str, Toast.LENGTH_LONG).show();
     }
 
     @Override

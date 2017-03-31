@@ -38,12 +38,14 @@ public class PracticalTest01Var03SecondaryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practical_test01_var03_secondary);
 
-        text1 = (EditText) findViewById(R.id.text1);
-        text2 = (EditText) findViewById(R.id.text2);
+        text1 = (EditText) findViewById(R.id.editText);
+        text2 = (EditText) findViewById(R.id.editText3);
+        text1.setText(String.valueOf(""));
+        text2.setText(String.valueOf(""));
         Intent intent = getIntent();
         if (intent != null && ( intent.getExtras().containsKey("text1") || (intent.getExtras().containsKey("text2")))) {
-            String txt1 = String.valueOf(intent.getIntExtra("text1", -1));
-            String txt2 = String.valueOf(intent.getIntExtra("text2", -1));
+            String txt1 = String.valueOf(intent.getStringExtra("text1"));
+            String txt2 = String.valueOf(intent.getStringExtra("text2"));
             text1.setText(String.valueOf(txt1));
             text2.setText(String.valueOf(txt2));
         }
